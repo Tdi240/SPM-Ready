@@ -19,7 +19,7 @@ fig.patch.set_alpha(0)
 ax.patch.set_alpha(0)
 
 # Histogram of returns
-sns.histplot(returns, bins=50, color='lightblue', kde=False, stat='density', label='Histogram', ax=ax)
+sns.histplot(returns, bins=50, color='lightblue', kde=False, stat='density', ax=ax) # histogram
 
 # Define range for distribution plots
 x_vals = np.linspace(returns.min(), returns.max(), 1000)
@@ -28,17 +28,17 @@ x_vals = np.linspace(returns.min(), returns.max(), 1000)
 bandwidth = 0.005  # Adjust bandwidth for smooth KDE
 kde_epanechnikov = KernelDensity(kernel='epanechnikov', bandwidth=bandwidth).fit(returns[:, np.newaxis])
 log_dens_epanechnikov = kde_epanechnikov.score_samples(x_vals[:, np.newaxis])
-ax.plot(x_vals, np.exp(log_dens_epanechnikov), color='red', lw=2, label='Epanechnikov KDE')
+ax.plot(x_vals, np.exp(log_dens_epanechnikov), color='red', lw=2) # label='Epanechnikov KDE
 
 # Normal Distribution Fit
 mu, sigma = np.mean(returns), np.std(returns)
 normal_dist = norm.pdf(x_vals, mu, sigma)
-ax.plot(x_vals, normal_dist, color='blue', lw=2, label='Normal')
+ax.plot(x_vals, normal_dist, color='blue', lw=2) # label='Normal'
 
 # Student's t Distribution (df=5)
 df = 5
 student_t_dist = t.pdf(x_vals, df=df, loc=mu, scale=sigma)
-ax.plot(x_vals, student_t_dist, color='green', lw=2, label="Student's t, 5 df")
+ax.plot(x_vals, student_t_dist, color='green', lw=2) # label="Student's t, 5 df"
 
 # Customize plot
 ax.set_xlabel('Daily Returns')
